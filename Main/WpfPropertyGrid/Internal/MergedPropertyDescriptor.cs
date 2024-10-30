@@ -24,6 +24,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System;
+using System.Runtime.Serialization;
 
 namespace tainicom.WpfPropertyGrid.Internal
 {
@@ -123,54 +124,56 @@ namespace tainicom.WpfPropertyGrid.Internal
       return (this.canReset == TriState.Yes);
     }
 
-    private object CopyValue(object value)
-    {
-      if (value != null)
-      {
-        Type type = value.GetType();
-        if (type.IsValueType)
+        private object CopyValue(object value)
         {
-          return value;
-        }
-        object obj2 = null;
-        ICloneable cloneable = value as ICloneable;
-        if (cloneable != null)
-        {
-          obj2 = cloneable.Clone();
-        }
-        if (obj2 == null)
-        {
-          // TODO: Reuse ObjectServices here?
-          TypeConverter converter = TypeDescriptor.GetConverter(value);
-          if (converter.CanConvertTo(typeof(InstanceDescriptor)))
-          {
-            InstanceDescriptor descriptor = (InstanceDescriptor)converter.ConvertTo(null, CultureInfo.InvariantCulture, value, typeof(InstanceDescriptor));
-            if ((descriptor != null) && descriptor.IsComplete)
+            if (value != null)
             {
-              obj2 = descriptor.Invoke();
+                Type type = value.GetType();
+                if (type.IsValueType)
+                {
+                    return value;
+                }
+                object obj2 = null;
+                ICloneable cloneable = value as ICloneable;
+                if (cloneable != null)
+                {
+                    obj2 = cloneable.Clone();
+                }
+                if (obj2 == null)
+                {
+                    // TODO: Reuse ObjectServices here?
+                    TypeConverter converter = TypeDescriptor.GetConverter(value);
+                    if (converter.CanConvertTo(typeof(InstanceDescriptor)))
+                    {
+                        InstanceDescriptor descriptor = (InstanceDescriptor)converter.ConvertTo(null, CultureInfo.InvariantCulture, value, typeof(InstanceDescriptor));
+                        if ((descriptor != null) && descriptor.IsComplete)
+                        {
+                            obj2 = descriptor.Invoke();
+                        }
+                    }
+                    if (((obj2 == null) && converter.CanConvertTo(typeof(string))) && converter.CanConvertFrom(typeof(string)))
+                    {
+                        object obj3 = converter.ConvertToInvariantString(value);
+                        obj2 = converter.ConvertFromInvariantString((string)obj3);
+                    }
+                }
+                if ((obj2 == null) && type.IsSerializable)
+                {
+                    using (MemoryStream serializationStream = new MemoryStream())
+                    {
+                        DataContractSerializer serializer = new DataContractSerializer(type);
+                        serializer.WriteObject(serializationStream, value);
+                        serializationStream.Position = 0L;
+                        obj2 = serializer.ReadObject(serializationStream);
+                    }
+                }
+                if (obj2 != null)
+                {
+                    return obj2;
+                }
             }
-          }
-          if (((obj2 == null) && converter.CanConvertTo(typeof(string))) && converter.CanConvertFrom(typeof(string)))
-          {
-            object obj3 = converter.ConvertToInvariantString(value);
-            obj2 = converter.ConvertFromInvariantString((string)obj3);
-          }
+            return value;
         }
-        if ((obj2 == null) && type.IsSerializable)
-        {
-          BinaryFormatter formatter = new BinaryFormatter();
-          MemoryStream serializationStream = new MemoryStream();
-          formatter.Serialize(serializationStream, value);
-          serializationStream.Position = 0L;
-          obj2 = formatter.Deserialize(serializationStream);
-        }
-        if (obj2 != null)
-        {
-          return obj2;
-        }
-      }
-      return value;
-    }
 
     protected override AttributeCollection CreateAttributeCollection()
     {

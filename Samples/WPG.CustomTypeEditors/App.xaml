@@ -2,8 +2,7 @@
   x:Class="Sample4.CustomTypeEditors.App"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:pg="http://schemas.tainicom.net/wpfpropertygrid"
-  xmlns:TK="http://schemas.microsoft.com/wpf/2008/toolkit"
+  xmlns:pg="clr-namespace:tainicom.WpfPropertyGrid;assembly=tainicom.WpfPropertyGrid"
   xmlns:editors="clr-namespace:Sample4.CustomTypeEditors.MyEditors"
   xmlns:local="clr-namespace:Sample4.CustomTypeEditors"
   xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -56,7 +55,7 @@
     </DataTemplate>
 
     <DataTemplate x:Key="MyDateEditorInlineTemplate">
-      <TK:DatePicker SelectedDate="{Binding Value, Mode=TwoWay}"/>
+      <DatePicker SelectedDate="{Binding Value, Mode=TwoWay}"/>
     </DataTemplate>
 
     <DataTemplate x:Key="MyPointInlineEditorTemplate">

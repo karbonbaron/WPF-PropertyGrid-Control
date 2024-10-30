@@ -3,7 +3,8 @@
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
   xmlns:local="clr-namespace:DialogEditor"
-  xmlns:pg="http://schemas.tainicom.net/wpfpropertygrid"
+  xmlns:pg="clr-namespace:tainicom.WpfPropertyGrid;assembly=tainicom.WpfPropertyGrid"
+  xmlns:pgd="clr-namespace:tainicom.WpfPropertyGrid.Design;assembly=tainicom.WpfPropertyGrid"
   WindowStartupLocation="CenterScreen"
   Title="How do I: Create Dialog Editor" Height="300" Width="500">
   

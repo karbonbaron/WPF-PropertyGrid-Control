@@ -2,7 +2,8 @@
   x:Class="Sample4.CustomTypeEditors.Window1"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:pg="http://schemas.tainicom.net/wpfpropertygrid"    
+  xmlns:pg="clr-namespace:tainicom.WpfPropertyGrid;assembly=tainicom.WpfPropertyGrid"
+  xmlns:pgd="clr-namespace:tainicom.WpfPropertyGrid.Design;assembly=tainicom.WpfPropertyGrid"
   xmlns:local="clr-namespace:Sample4.CustomTypeEditors"  
   xmlns:core="clr-namespace:System;assembly=mscorlib"
   xmlns:markup="clr-namespace:System.Windows.Markup;assembly=PresentationCore"
@@ -75,7 +76,7 @@
         <!--<pg:CategorizedLayout/>-->
 
         <!-- #1 USE DEFAULT TABBED LAYOUT -->
-        <pg:TabbedLayout>
+        <pgd:TabbedLayout>
           
           <!-- #1.1: Default layout usage -->
           <!-- 
@@ -88,10 +89,10 @@
           -->
 
           <!-- #1.2: Alternative layout usage (any Control being powered by attached properties) -->          
-          <pg:CategorizedLayout pg:TabbedLayout.CanClose="False" pg:TabbedLayout.Header="Categorized"/>
-          <pg:AlphabeticalLayout pg:TabbedLayout.CanClose="False" pg:TabbedLayout.Header="Alphabetical"/>          
+          <pgd:CategorizedLayout pgd:TabbedLayout.CanClose="False" pgd:TabbedLayout.Header="Categorized"/>
+          <pgd:AlphabeticalLayout pgd:TabbedLayout.CanClose="False" pgd:TabbedLayout.Header="Alphabetical"/>          
           
-        </pg:TabbedLayout>
+        </pgd:TabbedLayout>
 
         <!-- #2 USE CUSTOM TABBED LAYOUT. EACH CATEGORY GOES TO A SEPARATE TAB -->
         <!--

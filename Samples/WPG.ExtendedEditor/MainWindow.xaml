@@ -2,7 +2,8 @@
   x:Class="WPG.ExtendedEditor.MainWindow"
   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-  xmlns:pg="http://schemas.tainicom.net/wpfpropertygrid"
+  xmlns:pg="clr-namespace:tainicom.WpfPropertyGrid;assembly=tainicom.WpfPropertyGrid"
+  xmlns:pgd="clr-namespace:tainicom.WpfPropertyGrid.Design;assembly=tainicom.WpfPropertyGrid"
   xmlns:local="clr-namespace:WPG.ExtendedEditor"
   Title="MainWindow" Height="350" Width="525">
 
@@ -13,11 +14,11 @@
   <Grid>
     <pg:PropertyGrid SelectedObject="{StaticResource ViewModel}" PropertyFilterVisibility="Collapsed" Margin="2">
       <pg:PropertyGrid.Layout>
-        <pg:TabbedLayout>
-          <pg:TabbedLayoutItem Header="Alphabetical" CanClose="False">
-            <pg:AlphabeticalLayout/>
-          </pg:TabbedLayoutItem>
-        </pg:TabbedLayout>
+        <pgd:TabbedLayout>
+          <pgd:TabbedLayoutItem Header="Alphabetical" CanClose="False">
+            <pgd:AlphabeticalLayout/>
+          </pgd:TabbedLayoutItem>
+        </pgd:TabbedLayout>
       </pg:PropertyGrid.Layout>
       <pg:PropertyGrid.Editors>
         <pg:PropertyEditor DeclaringType="{x:Type local:ViewModel}" PropertyName="Details" InlineTemplate="{StaticResource TextEditor_Inline}" ExtendedTemplate="{StaticResource TextEditor_Extended}"/>
